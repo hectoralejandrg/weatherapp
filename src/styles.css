@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#root {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+.App {
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  display: flex;
+  padding: 2rem;
+}
+.p2 {
+  padding: 3px;
+}
+.color-text {
+  color: #ba444e;
+}
