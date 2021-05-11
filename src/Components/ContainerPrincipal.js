@@ -1,6 +1,5 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import getWeather from "../Api/ApiWeather";
-import getLocation from "../Api/Location";
 const City = lazy(() => import("./City"));
 const Description = lazy(() => import("./Description"));
 //import Description from "./Description";
