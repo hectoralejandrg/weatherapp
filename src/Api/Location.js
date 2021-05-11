@@ -8,7 +8,6 @@ const getLocation = () => {
     console.log("No se pudo obtener tu ubicacion.");
   }
   navigator.geolocation.getCurrentPosition(location, err);
-  //console.log("pos", position);
   return position;
 };
 export default getLocation;
