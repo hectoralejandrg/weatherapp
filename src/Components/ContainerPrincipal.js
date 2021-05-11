@@ -36,8 +36,14 @@ const ContainerPrincipal = () => {
   const [coord, setCoord] = useState({ lat: 0, lon: 0 });
 
   useEffect(() => {
-    setCoord(getLocation());
-  }, []);
+    const loc =async (pos)=>{
+      await setCoord({lat: pos.coords.latitude, lon: pos.coords.longitude})
+    }
+    const getCurrentPosition=()=>{
+      navigator.geolocation.getCurrentPosition(loc)
+    }
+    getCurrentPosition()
+  }, [])
 
   useEffect(() => {
     getWeather(coord)
@@ -63,7 +69,11 @@ const ContainerPrincipal = () => {
   return (
     <div className="container">
       <h1 className="p2 color-text">Wheather App</h1>
-      <Suspense fallback={<div className="spinner"></div>}>
+      <Suspense fallback={
+        <div className="load-container">
+          <div className="spinner"></div>
+        </div>
+      }>
         <City city={dataWeather.name} country={dataWeather.sys.country} />
         <Description
           weather={dataWeather.weather[0].main}
