@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import getWeather from "../Api/ApiWeather";
 import getLocation from "../Api/Location";
-
-import Description from "./Description";
-import "./stylePrincipal.css";
+const City = lazy(() => import("./City"));
+const Description = lazy(() => import("./Description"));
+//import Description from "./Description";
 
 const ContainerPrincipal = () => {
   const [dataWeather, setDataWeather] = useState({
@@ -26,19 +26,24 @@ const ContainerPrincipal = () => {
       all: 0
     },
     sys: {
+      type: 0,
       country: ""
     },
     name: ""
   });
 
   const [temperature, setTemperature] = useState([1, "°C"]);
+  const [coord, setCoord] = useState({ lat: 0, lon: 0 });
 
   useEffect(() => {
-    getWeather(getLocation())
+    setCoord(getLocation());
+  }, []);
+
+  useEffect(() => {
+    getWeather(coord)
       .then((data) => setDataWeather(data))
       .catch((err) => console.log("error", err));
-    console.log(dataWeather);
-  }, []);
+  }, [coord]);
 
   useEffect(() => {
     const convert = dataWeather.main.temp - 273.15;
@@ -58,19 +63,19 @@ const ContainerPrincipal = () => {
   return (
     <div className="container">
       <h1 className="p2 color-text">Wheather App</h1>
-      <h2 className="p2 color-text">
-        {dataWeather.name}, {dataWeather.sys.country}
-      </h2>
-      <Description
-        weather={dataWeather.weather[0].main}
-        description={dataWeather.weather[0].description}
-        wind={dataWeather.wind.speed}
-        clouds={dataWeather.clouds.all}
-        pressure={dataWeather.main.pressure}
-        temp={temperature}
-        icon={dataWeather.weather[0].icon}
-        handle={handleChange}
-      />
+      <Suspense fallback={<div className="spinner"></div>}>
+        <City city={dataWeather.name} country={dataWeather.sys.country} />
+        <Description
+          weather={dataWeather.weather[0].main}
+          description={dataWeather.weather[0].description}
+          wind={dataWeather.wind.speed}
+          clouds={dataWeather.clouds.all}
+          pressure={dataWeather.main.pressure}
+          temp={temperature}
+          icon={dataWeather.weather[0].icon}
+          handle={handleChange}
+        />
+      </Suspense>
     </div>
   );
 };

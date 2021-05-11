@@ -16,6 +16,7 @@
 }
 .button:hover {
   box-shadow: 0px 8px 8px -6px #225d58;
+  cursor: pointer;
 }
 .button:active {
   transform: translateY(4px);
