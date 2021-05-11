@@ -2,7 +2,6 @@ import { useEffect, useState, lazy, Suspense } from "react";
 import getWeather from "../Api/ApiWeather";
 const City = lazy(() => import("./City"));
 const Description = lazy(() => import("./Description"));
-//import Description from "./Description";
 
 const ContainerPrincipal = () => {
   const [dataWeather, setDataWeather] = useState({
