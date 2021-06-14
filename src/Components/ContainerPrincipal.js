@@ -66,7 +66,7 @@ const ContainerPrincipal = () => {
 
   return (
     <div className="container">
-      <h1 className="p2 color-text">Wheather App</h1>
+      <h1 className="p2 color-text">Weather App</h1>
       <Suspense fallback={
         <div className="load-container">
           <div className="spinner"></div>
